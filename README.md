@@ -1,6 +1,3 @@
-ToDoList
-========
+# Projet 8 - Améliorez une application existante de ToDo & Co
 
-Base du projet #8 : Améliorez un projet existant
-
-https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
+### Parcours Développeur d'application PHP/Symfony

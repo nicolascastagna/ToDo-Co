@@ -1,0 +1,8 @@
+homepage:
+    path: /
+    defaults:
+        _controller: App\Controller\MainController::homepageAction
+
+controllers:
+    resource: "../src/Controller/"
+    type: annotation
