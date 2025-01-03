@@ -6,24 +6,24 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
-    private $passwordEncoder;
-    private $entityManager;
-    private $userRepository;
+    private UserPasswordHasherInterface $passwordHasher;
+    private EntityManagerInterface $entityManager;
+    private UserRepository $userRepository;
 
     public function __construct(
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordHasher,
         EntityManagerInterface $entityManager,
         UserRepository $userRepository
     ) {
-        $this->passwordEncoder = $passwordEncoder;
+        $this->passwordHasher = $passwordHasher;
         $this->entityManager = $entityManager;
         $this->userRepository = $userRepository;
     }
@@ -31,7 +31,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users", name="user_list")
      */
-    public function listAction(): Response
+    public function list(): Response
     {
         return $this->render('user/list.html.twig', ['users' => $this->userRepository->findAll()]);
     }
@@ -39,7 +39,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users/create", name="user_create")
      */
-    public function createAction(Request $request): Response
+    public function create(Request $request): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -47,8 +47,10 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $this->passwordEncoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
+            $user->setPassword($this->passwordHasher->hashPassword(
+                $user,
+                $form->get('password')->getData()
+            ));
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
@@ -64,15 +66,17 @@ class UserController extends AbstractController
     /**
      * @Route("/users/{id}/edit", name="user_edit")
      */
-    public function editAction(User $user, Request $request): Response
+    public function edit(User $user, Request $request): Response
     {
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $this->passwordEncoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
+            $user->setPassword($this->passwordHasher->hashPassword(
+                $user,
+                $form->get('password')->getData()
+            ));
 
             $this->entityManager->flush();
 

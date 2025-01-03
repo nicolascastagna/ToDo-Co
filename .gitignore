@@ -32,3 +32,5 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+/tools/php-cs-fixer/vendor/
+/.php-cs-fixer.cache

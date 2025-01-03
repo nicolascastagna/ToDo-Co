@@ -84,5 +84,7 @@ class User implements UserInterface
         return array('ROLE_USER');
     }
 
-    public function eraseCredentials() {}
+    public function eraseCredentials()
+    {
+    }
 }

@@ -6,14 +6,14 @@ use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class TaskController extends AbstractController
 {
-    private $entityManager;
-    private $taskRepository;
+    private EntityManagerInterface $entityManager;
+    private TaskRepository $taskRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -27,7 +27,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks", name="task_list")
      */
-    public function listAction()
+    public function list()
     {
         return $this->render('task/list.html.twig', ['tasks' => $this->taskRepository->findAll()]);
     }
@@ -35,7 +35,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(Request $request)
+    public function create(Request $request)
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -57,7 +57,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
      */
-    public function editAction(Task $task, Request $request)
+    public function edit(Task $task, Request $request)
     {
         $form = $this->createForm(TaskType::class, $task);
 
@@ -80,7 +80,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
      */
-    public function toggleTaskAction(Task $task)
+    public function toggleTask(Task $task)
     {
         $task->toggle(!$task->isDone());
         $this->entityManager->flush();
@@ -93,7 +93,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
      */
-    public function deleteTaskAction(Task $task)
+    public function deleteTask(Task $task)
     {
         $this->entityManager->remove($task);
         $this->entityManager->flush();
