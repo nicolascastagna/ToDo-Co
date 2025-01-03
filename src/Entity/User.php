@@ -13,6 +13,10 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
     fields: ['email'],
     message: 'Cette adresse email est déjà utilisée.'
 )]
+#[UniqueEntity(
+    fields: ['username'],
+    message: 'Ce nom d\'utilisateur est déjà utilisé.'
+)]
 #[ORM\Table('user')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
