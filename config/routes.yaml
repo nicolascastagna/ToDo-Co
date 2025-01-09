@@ -6,3 +6,7 @@ homepage:
 controllers:
     resource: "../src/Controller/"
     type: annotation
+
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
