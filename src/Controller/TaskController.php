@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 class TaskController extends AbstractController
 {
@@ -22,14 +23,13 @@ class TaskController extends AbstractController
         $this->taskRepository = $taskRepository;
     }
 
-
-    #[Route(path: '/tasks', name: 'task_list')]
+    #[Route(path: '/tasks', name: 'task_list', methods: [Request::METHOD_GET])]
     public function list(): Response
     {
-        return $this->render('task/list.html.twig', ['tasks' => $this->taskRepository->findAll()]);
+        return $this->renderForm('task/list.html.twig', ['tasks' => $this->taskRepository->findAll()]);
     }
 
-    #[Route(path: '/tasks/create', name: 'task_create')]
+    #[Route(path: '/tasks/create', name: 'task_create', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function create(Request $request): Response
     {
         $task = new Task();
@@ -46,10 +46,10 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('task_list');
         }
 
-        return $this->render('task/create.html.twig', ['form' => $form->createView()]);
+        return $this->renderForm('task/create.html.twig', ['form' => $form]);
     }
 
-    #[Route(path: '/tasks/{id}/edit', name: 'task_edit')]
+    #[Route(path: '/tasks/{id}/edit', name: 'task_edit', methods: [Request::METHOD_PATCH])]
     public function edit(Task $task, Request $request): Response
     {
         $form = $this->createForm(TaskType::class, $task);
@@ -64,13 +64,13 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('task_list');
         }
 
-        return $this->render('task/edit.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('task/edit.html.twig', [
+            'form' => $form,
             'task' => $task,
         ]);
     }
 
-    #[Route(path: '/tasks/{id}/toggle', name: 'task_toggle')]
+    #[Route(path: '/tasks/{id}/toggle', name: 'task_toggle', methods: [Request::METHOD_GET])]
     public function toggleTask(Task $task): RedirectResponse
     {
         $task->toggle(!$task->isDone());
@@ -81,7 +81,7 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('task_list');
     }
 
-    #[Route(path: '/tasks/{id}/delete', name: 'task_delete')]
+    #[Route(path: '/tasks/{id}/delete', name: 'task_delete', methods: [Request::METHOD_GET])]
     public function deleteTask(Task $task): RedirectResponse
     {
         $this->entityManager->remove($task);

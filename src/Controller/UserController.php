@@ -24,13 +24,13 @@ class UserController extends AbstractController
         $this->userRepository = $userRepository;
     }
 
-    #[Route(path: '/users', name: 'user_list')]
+    #[Route(path: '/users', name: 'user_list', methods: [Request::METHOD_GET])]
     public function list(): Response
     {
-        return $this->render('user/list.html.twig', ['users' => $this->userRepository->findAll()]);
+        return $this->renderForm('user/list.html.twig', ['users' => $this->userRepository->findAll()]);
     }
 
-    #[Route(path: '/users/create', name: 'user_create')]
+    #[Route(path: '/users/create', name: 'user_create', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function create(Request $request): Response
     {
         $user = new User();
@@ -39,23 +39,21 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($this->passwordHasher->hashPassword(
+            $hashedPassword = $this->passwordHasher->hashPassword(
                 $user,
                 $form->get('password')->getData()
-            ));
-
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+            );
+            $this->userRepository->upgradePassword($user, $hashedPassword);
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
             return $this->redirectToRoute('user_list');
         }
 
-        return $this->render('user/create.html.twig', ['form' => $form->createView()]);
+        return $this->renderForm('user/create.html.twig', ['form' => $form]);
     }
 
-    #[Route(path: '/users/{id}/edit', name: 'user_edit')]
+    #[Route(path: '/users/{id}/edit', name: 'user_edit', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function edit(User $user, Request $request): Response
     {
         $form = $this->createForm(UserType::class, $user);
@@ -63,18 +61,17 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($this->passwordHasher->hashPassword(
+            $hashedPassword = $this->passwordHasher->hashPassword(
                 $user,
                 $form->get('password')->getData()
-            ));
-
-            $this->entityManager->flush();
+            );
+            $this->userRepository->upgradePassword($user, $hashedPassword);
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 
             return $this->redirectToRoute('user_list');
         }
 
-        return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
+        return $this->renderForm('user/edit.html.twig', ['form' => $form, 'user' => $user]);
     }
 }

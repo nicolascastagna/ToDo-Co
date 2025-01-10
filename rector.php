@@ -9,12 +9,12 @@ use Rector\Doctrine\Set\DoctrineSetList;
 
 return RectorConfig::configure()
     ->withSets([
-        // SymfonySetList::SYMFONY_54,
+        SymfonySetList::SYMFONY_60,
         LevelSetList::UP_TO_PHP_82,
-        SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES,
-        DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES,
-        // SymfonySetList::SYMFONY_CODE_QUALITY,
-        // SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
+        // SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES,
+        // DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES,
+        SymfonySetList::SYMFONY_CODE_QUALITY,
+        SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
     ])
     ->withPaths([
         __DIR__ . '/config',
