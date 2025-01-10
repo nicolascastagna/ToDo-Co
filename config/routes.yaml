@@ -4,9 +4,9 @@ homepage:
         _controller: App\Controller\MainController::homepageAction
 
 controllers:
-    resource: "../src/Controller/"
-    type: annotation
+    resource: ../src/Controller/
+    type: attribute
 
 login:
     path: /login
-    controller: App\Controller\SecurityController::login
+    controller: App\Controller\Security\SecurityController::login
