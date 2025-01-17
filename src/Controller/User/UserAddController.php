@@ -16,8 +16,7 @@ class UserAddController extends AbstractController
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly UserRepository $userRepository
-    ) {
-    }
+    ) {}
 
 
     #[Route(path: '/users/create', name: 'user_create', methods: [Request::METHOD_GET, Request::METHOD_POST])]
@@ -34,6 +33,9 @@ class UserAddController extends AbstractController
                 $form->get('password')->getData()
             );
             $this->userRepository->upgradePassword($user, $hashedPassword);
+
+            $roles = $form->get('roles')->getData();
+            $user->setRoles($roles);
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
