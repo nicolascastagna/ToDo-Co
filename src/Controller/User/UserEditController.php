@@ -32,8 +32,10 @@ class UserEditController extends AbstractController
             );
             $this->userRepository->upgradePassword($user, $hashedPassword);
 
-            $roles = $form->get('roles')->getData();
+            $roles = [$form->get('roles')->getData()];
             $user->setRoles($roles);
+
+            $this->userRepository->save($user, true);
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 

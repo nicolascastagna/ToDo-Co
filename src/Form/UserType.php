@@ -24,15 +24,17 @@ class UserType extends AbstractType
                 'second_options' => ['label' => 'Tapez le mot de passe à nouveau'],
             ])
             ->add('email', EmailType::class, ['label' => 'Adresse email'])
-            ->add('roles', ChoiceType::class, [
-                'label' => 'Roles utilisateur',
-                'multiple' => true,
-                'expanded' => true,
-                'required' => true,
-                'choices'  => [
-                    'ROLE_USER' => 'ROLE_USER',
-                    'ROLE_ADMIN' => 'ROLE_ADMIN'
-                ],
-            ]);
+            ->add(
+                'roles',
+                ChoiceType::class,
+                [
+                    'label' => 'Rôles utilisateur',
+                    'mapped' => false,
+                    'choices'  => [
+                        'Utilisateur/rice' => 'ROLE_USER',
+                        'Administrateur/rice' => 'ROLE_ADMIN'
+                    ],
+                ]
+            );
     }
 }
