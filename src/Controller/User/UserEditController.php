@@ -16,8 +16,7 @@ class UserEditController extends AbstractController
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly UserRepository $userRepository
-    ) {
-    }
+    ) {}
 
     #[Route(path: '/users/{id}/edit', name: 'user_edit', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function edit(User $user, Request $request): Response
@@ -32,6 +31,11 @@ class UserEditController extends AbstractController
                 $form->get('password')->getData()
             );
             $this->userRepository->upgradePassword($user, $hashedPassword);
+
+            $roles = [$form->get('roles')->getData()];
+            $user->setRoles($roles);
+
+            $this->userRepository->save($user, true);
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 
