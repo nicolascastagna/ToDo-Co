@@ -10,10 +10,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table]
 class Task
 {
-    #[ORM\Column()]
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private ?string $id = null;
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
     #[ORM\Column()]
     private ?DateTime $createdAt = null;
@@ -28,6 +28,9 @@ class Task
 
     #[ORM\Column()]
     private ?bool $isDone = null;
+
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -78,5 +81,17 @@ class Task
     public function toggle($flag): void
     {
         $this->isDone = $flag;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }
