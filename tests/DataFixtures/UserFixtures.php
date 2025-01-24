@@ -33,49 +33,42 @@ class UserFixtures extends Fixture
             'username' => self::USERNAME_ANONYMOUS,
             'password' => self::PASSWORD,
             'roles' => [self::ROLE_USER],
-            // 'ref' => self::EMAIL_ANONYMOUS,
         ],
         [
             'ref' => self::EMAIL_ADMIN,
             'username' => self::USERNAME_ADMIN,
             'password' => self::PASSWORD,
             'roles' => [self::ROLE_ADMIN],
-            // 'ref' => self::EMAIL_ADMIN,
         ],
         [
             'ref' => self::EMAIL_USER1,
             'username' => 'user1',
             'password' => self::PASSWORD . '-1',
             'roles' => [self::ROLE_USER],
-            // 'ref' => self::EMAIL_USER1,
         ],
         [
             'ref' => self::EMAIL_USER2,
             'username' => 'user2',
             'password' => self::PASSWORD . '-2',
             'roles' => [self::ROLE_USER],
-            // 'ref' => self::EMAIL_USER2,
         ],
         [
             'ref' => self::EMAIL_USER3,
             'username' => 'user3',
             'password' => self::PASSWORD . '-3',
             'roles' => [self::ROLE_USER],
-            // 'ref' => self::EMAIL_USER3,
         ],
         [
             'ref' => self::EMAIL_USER4,
             'username' => 'user4',
             'password' => self::PASSWORD . '-4',
             'roles' => [self::ROLE_USER],
-            // 'ref' => self::EMAIL_USER4,
         ],
         [
             'ref' => self::EMAIL_USER5,
             'username' => 'user5',
             'password' => self::PASSWORD . '-5',
             'roles' => [self::ROLE_USER],
-            // 'ref' => self::EMAIL_USER5,
         ]
     ];
 
@@ -96,7 +89,8 @@ class UserFixtures extends Fixture
 
     /**
      * @param string $username
-     * @param string $email
+     * @param string $ref
+     * @param string $password
      * @param array $roles
      *
      * @return UserBuilder

@@ -87,6 +87,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
     /**
      * @param string $title
      * @param string $content
+     * @param bool $isDone
      * @param User $user
      *
      * @return TaskBuilder
