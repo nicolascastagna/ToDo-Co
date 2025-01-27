@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
+<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          backupGlobals="false"
@@ -9,11 +9,18 @@
          convertDeprecationsToExceptions="false"
 >
     <php>
+        <ini name="display_errors" value="1" />
         <ini name="error_reporting" value="-1" />
         <server name="APP_ENV" value="test" force="true" />
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
-        <server name="SYMFONY_PHPUNIT_VERSION" value="9.6" />
+        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
+        <server name="KERNEL_CLASS" value="App\Kernel"/>
+        <env name="MYSQL_ID" value="root"/>
+        <env name="MYSQL_PASSWORD" value=""/>
+        <env name="MYSQL_NAME" value="todo-co_test"/>
+        <env name="MYSQL_HOST" value="127.0.0.1"/>
+        <env name="MYSQL_PORT" value="3306"/>
     </php>
 
     <testsuites>
@@ -33,5 +40,6 @@
     </listeners>
 
     <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
     </extensions>
 </phpunit>
