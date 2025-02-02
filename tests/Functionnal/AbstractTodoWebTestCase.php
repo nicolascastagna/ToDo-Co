@@ -8,6 +8,7 @@ use App\Tests\Assert\AssertResponse;
 use App\Tests\Assert\AssertWellFormedSuccessResponse;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use JsonException;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,9 +24,9 @@ abstract class AbstractTodoWebTestCase extends AbstractTodoFunctionnalTestCase
      * @param string|null $content
      * @param array       $parameters
      */
-    protected function requestGET(string $uri, ?string $content = null, array $parameters = []): void
+    protected function requestGET(string $uri, ?string $content = null, array $parameters = []): Crawler
     {
-        $this->request(Request::METHOD_GET, $uri, $content, $parameters);
+        return $this->client->request(Request::METHOD_GET, $uri, $parameters, [], [], $content);
     }
 
     /**
