@@ -24,5 +24,10 @@ services:
     App\Tests\DataFixtures\:
         resource: "../tests/DataFixtures/"
 
+    App\EventListener\AccessDeniedListener:
+        arguments:
+            $requestStack: "@request_stack"
+            $authorization: "@security.authorization_checker"
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
