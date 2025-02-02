@@ -14,6 +14,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
     public const TASK_ADMIN = 'task_admin';
     public const TASK_USER_PREFIX = 'task_user_';
+    public const TASK_USER_LIST_INDEX = 'Tâche de l\'utilisateur user';
 
     public const TASKS_ARRAY = [
         [
@@ -24,35 +25,35 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
             'ref' => self::TASK_ADMIN
         ],
         [
-            'title' => 'Tâche de l\'utilisateur user1',
+            'title' => self::TASK_USER_LIST_INDEX . '1',
             'content' => 'Ceci est une description de la tâche créée par l\'utilisateur user1.',
             'isDone' => false,
             'user' => UserFixtures::EMAIL_USER1,
             'ref' => self::TASK_USER_PREFIX . '1'
         ],
         [
-            'title' => 'Tâche de l\'utilisateur user2',
+            'title' => self::TASK_USER_LIST_INDEX . '2',
             'content' => 'Ceci est une description de la tâche créée par l\'utilisateur user2.',
             'isDone' => true,
             'user' => UserFixtures::EMAIL_USER2,
             'ref' => self::TASK_USER_PREFIX . '2'
         ],
         [
-            'title' => 'Tâche de l\'utilisateur user3',
+            'title' => self::TASK_USER_LIST_INDEX . '3',
             'content' => 'Ceci est une description de la tâche créée par l\'utilisateur user3.',
             'isDone' => true,
             'user' => UserFixtures::EMAIL_USER3,
             'ref' => self::TASK_USER_PREFIX . '3'
         ],
         [
-            'title' => 'Tâche de l\'utilisateur user4',
+            'title' => self::TASK_USER_LIST_INDEX . '4',
             'content' => 'Ceci est une description de la tâche créée par l\'utilisateur user4.',
             'isDone' => false,
             'user' => UserFixtures::EMAIL_USER4,
             'ref' => self::TASK_USER_PREFIX . '4'
         ],
         [
-            'title' => 'Tâche de l\'utilisateur user5',
+            'title' => self::TASK_USER_LIST_INDEX . '5',
             'content' => 'Ceci est une description de la tâche créée par l\'utilisateur user5.',
             'isDone' => false,
             'user' => UserFixtures::EMAIL_USER5,

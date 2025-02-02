@@ -3,6 +3,7 @@
 namespace App\Tests\Functionnal\Controller\User;
 
 use App\Tests\Functionnal\AbstractTodoWebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserListControllerTest extends AbstractTodoWebTestCase
 {
@@ -19,7 +20,8 @@ class UserListControllerTest extends AbstractTodoWebTestCase
         $this->loginUser();
         $this->requestGET(sprintf($this->getRoute()));
 
-        $this->assertForbiddenResponse();
+        $this->assertResponseRedirects('/', Response::HTTP_FOUND);
+        $this->client->followRedirect();
     }
 
     public function getRoute(): string
