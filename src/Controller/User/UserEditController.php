@@ -18,7 +18,8 @@ class UserEditController extends AbstractController
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly UserRepository $userRepository,
         private readonly EntityManagerInterface $entityManager,
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/users/{id}/edit', name: 'user_edit', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function edit(User $user, Request $request): Response

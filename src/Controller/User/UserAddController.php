@@ -18,7 +18,8 @@ class UserAddController extends AbstractController
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly UserRepository $userRepository,
         private readonly EntityManagerInterface $entityManager,
-    ) {}
+    ) {
+    }
 
 
     #[Route(path: '/users/create', name: 'user_create', methods: [Request::METHOD_GET, Request::METHOD_POST])]

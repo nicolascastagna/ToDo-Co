@@ -12,7 +12,9 @@ final class TaskVoter extends Voter
 {
     public const EDIT = 'TASK_EDIT';
 
-    public function __construct(private readonly Security $security) {}
+    public function __construct(private readonly Security $security)
+    {
+    }
 
     protected function supports(string $attribute, mixed $subject): bool
     {

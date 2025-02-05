@@ -16,7 +16,8 @@ class TaskAddController extends AbstractController
     public function __construct(
         private EntityManagerInterface $entityManager,
         private readonly Security $security,
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/tasks/create', name: 'task_create', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function create(Request $request): Response
