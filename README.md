@@ -28,7 +28,7 @@ composer install
 
 ## Environnement de test
 
-**4 -Créez un fichier .env.test et ajoutez les informations de connexion de votre base de donnée de test**
+**4 -Renommer le fichier **.env.test.example** en **.env.test** et modifier les paramètres de connexion de votre base de donnée de test**
 
 **5 - Créer la base de données :**   
     
