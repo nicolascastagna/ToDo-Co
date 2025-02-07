@@ -15,7 +15,8 @@ class TaskEditController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/tasks/{id}/edit', name: 'task_edit', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     #[IsGranted('TASK_EDIT', subject: 'task')]

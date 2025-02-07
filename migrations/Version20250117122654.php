@@ -20,9 +20,11 @@ final class Version20250117122654 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $hashedPassword = password_hash('2PHfA,DK/06b)|N5dKX>!|ch', PASSWORD_BCRYPT);
+
         $this->addSql("
         INSERT INTO user (username, password, email) 
-        VALUES ('anonymous_user', '2PHfA,DK/06b)|N5dKX>!|ch', 'anonymous@example.com')
+        VALUES ('anonymous_user', '$hashedPassword', 'anonymous@example.com')
     ");
 
         $this->addSql("

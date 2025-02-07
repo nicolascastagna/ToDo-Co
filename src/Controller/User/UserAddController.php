@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +16,10 @@ class UserAddController extends AbstractController
 {
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly UserRepository $userRepository
-    ) {}
+        private readonly UserRepository $userRepository,
+        private readonly EntityManagerInterface $entityManager,
+    ) {
+    }
 
 
     #[Route(path: '/users/create', name: 'user_create', methods: [Request::METHOD_GET, Request::METHOD_POST])]
@@ -37,7 +40,8 @@ class UserAddController extends AbstractController
             $roles = [$form->get('roles')->getData()];
             $user->setRoles($roles);
 
-            $this->userRepository->save($user, true);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 

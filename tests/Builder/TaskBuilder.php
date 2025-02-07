@@ -166,6 +166,6 @@ class TaskBuilder
             return;
         }
 
-        $this->user->setId($this->id);
+        $this->task->setId($this->id);
     }
 }

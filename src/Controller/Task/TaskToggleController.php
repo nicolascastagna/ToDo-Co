@@ -14,7 +14,8 @@ class TaskToggleController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/tasks/{id}/toggle', name: 'task_toggle', methods: [Request::METHOD_GET])]
     #[IsGranted('TASK_EDIT', subject: 'task')]

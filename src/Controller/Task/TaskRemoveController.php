@@ -14,7 +14,8 @@ class TaskRemoveController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/tasks/{id}/delete', name: 'task_delete', methods: [Request::METHOD_GET])]
     #[IsGranted('TASK_EDIT', subject: 'task')]

@@ -34,18 +34,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Save the User object to the database
      *
-     * @param User    $entity param
-     * @param boolean $flush  param
+     * @param User|null $user
+     * @param string    $email
      *
      */
-    public function save(User $entity, bool $flush = false): void
+    public function findOneByEmail(string $email): ?User
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email = :email')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
