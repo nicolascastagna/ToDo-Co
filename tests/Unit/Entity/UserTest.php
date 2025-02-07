@@ -1,12 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\Task;
-use App\Entity\User;
-use App\Tests\Builder\TaskBuilder;
 use App\Tests\Builder\UserBuilder;
 use PHPUnit\Framework\TestCase;
 
@@ -14,40 +10,44 @@ class UserTest extends TestCase
 {
     public function testUsername()
     {
-        $user = (new UserBuilder())
+        $user = UserBuilder::create()
             ->setUsername('TestUsername')
             ->build();
+
         $this->assertSame('TestUsername', $user->getUsername());
     }
 
     public function testGetUserIdentifier()
     {
-        $user = (new UserBuilder())
-            ->setUsername('TestUsername')
+        $user = UserBuilder::create()
+            ->setEmail('test@example.com')
             ->build();
-        $this->assertSame($user->getUsername(), $user->getUserIdentifier());
+
+        $this->assertSame($user->getEmail(), $user->getUserIdentifier());
     }
 
     public function testPassword()
     {
-        $user = (new UserBuilder())
+        $user = UserBuilder::create()
             ->setPassword('TestPassword')
             ->build();
+
         $this->assertSame('TestPassword', $user->getPassword());
     }
 
     public function testEmail()
     {
-        $user = (new UserBuilder())
+        $user = UserBuilder::create()
             ->setEmail('TestEmail')
             ->build();
+
         $this->assertSame('TestEmail', $user->getEmail());
     }
 
     public function testAddTask()
     {
-        $user = (new UserBuilder())->build();
-        $task = (new TaskBuilder())->build();
+        $user = UserBuilder::create()->build();
+        $task = new Task();
         $user->addTask($task);
 
         $this->assertContains($task, $user->getTasks());
@@ -55,9 +55,12 @@ class UserTest extends TestCase
 
     public function testRemoveTask()
     {
-        $user = (new UserBuilder())->build();
-        $task = (new TaskBuilder())->build();
+        $user = UserBuilder::create()->build();
+        $task = new Task();
         $user->addTask($task);
+
+        $this->assertCount(1, $user->getTasks());
+
         $user->removeTask($task);
 
         $this->assertEmpty($user->getTasks());
